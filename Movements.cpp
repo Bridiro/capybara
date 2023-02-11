@@ -3,7 +3,7 @@
 
 
 /**
- * @brief Init screen in Movements
+ * @brief Init screen in Movements @endif
  * 
  * @param lcda Pointer to lcd object
  */
