@@ -56,15 +56,6 @@ void straightForCm(float cm, int pwm) {
       }
       count++;
       IMU.readGyroscope(x, y, z);
-      /*
-      if(prevZ < z) {
-        motorSetSpeedA(pwm + (z-prevZ)*5);
-      }
-      else if(z < prevZ) {
-        motorSetSpeedB(pwm + (prevZ-z)*5);
-      }
-      prevZ = z;
-      */
       
       zTot += (z-counterZ);
 
@@ -108,18 +99,57 @@ void backForCm(float cm, int pwm) {
 
   int target = calculateStep(-cm);
   enc = 0;
+  float x, y, z;
+  float prevZ=0;
+  float zTot = 0;
+  float counterZ;
+  int count=0;
+  counterZ = z;
 
-  while(target < enc) {
+  while(enc < target) {
+    if(IMU.gyroscopeAvailable()) {
+      if(count % 10 == 0) {
+        IMU.readGyroscope(x, y, counterZ);
+      }
+      count++;
+      IMU.readGyroscope(x, y, z);
+      
+      zTot += (z-counterZ);
+
+      if(zTot > 0) {
+        motorSetSpeedA(pwm + (zTot / 3));
+        motorSetSpeedB(pwm);
+      }
+      else if(zTot < 0) {
+        motorSetSpeedB(pwm + (zTot / 3));
+        motorSetSpeedA(pwm);
+      }
+      else {
+        motorSetSpeedBoth(pwm);
+      }
+    }
     lcd1.clearDisplay();
     lcd1.setCursor(1, 1);
     lcd1.println(enc);
-    lcd1.print(target);
+    lcd1.println(target);
+    lcd1.print(zTot);
     lcd1.display();
     motorBackward();
   }
 
   motorStop();
   enc = 0;
+}
+
+
+/**
+ * @brief Rotate the robot for degree @endif
+ * 
+ * @param degree Degree value to turn
+ * @param pwm PWM value
+ */
+void rotateForDegree(float degree, int pwm) {
+
 }
 
 
@@ -158,7 +188,7 @@ void calibrateGyro(int n) {
  * 
  */
 int calculateStep(float cm) {
-  return cm / (6.15*PI) * 12000 * 0.75;
+  return cm / (6.15*PI) * 12000 * 0.85;
 }
 
 

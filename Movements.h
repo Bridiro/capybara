@@ -21,6 +21,7 @@ void initScreen(Adafruit_SSD1306 lcda);
 void initEncoder();
 void straightForCm(float cm, int pwm);
 void backForCm(float cm, int pwm);
+void rotateForDegree(float degree, int pwm);
 int calculateStep(float cm);
 void calibrateGyro(int n);
 void readEncoder();
