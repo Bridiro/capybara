@@ -43,12 +43,18 @@ void setup() {
 }
 
 void loop() {
-  lcd.clearDisplay();
-  lcd.setCursor(1, 1);
-  lcd.print(enc);
-  lcd.display();
-
-  delay(1000);
+  straightForCm(50, 170);
+  delay(500);
+  rotateForDegree(90, 230);
+  delay(500);
   straightForCm(30, 170);
+  delay(500);
+  rotateForDegree(-90, 230);
+  delay(500);
+  backForCm(50, 170);
+
+  lcd.clearDisplay();
+  lcd.println("FINITOOO!");
+  lcd.display();
   delay(5000);
 }

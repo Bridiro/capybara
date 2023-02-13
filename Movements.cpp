@@ -43,7 +43,6 @@ void straightForCm(float cm, int pwm) {
   int target = calculateStep(cm);
   enc = 0;
   float x, y, z;
-  float prevZ=0;
   float zTot = 0;
   float counterZ;
   int count=0;
@@ -100,13 +99,12 @@ void backForCm(float cm, int pwm) {
   int target = calculateStep(-cm);
   enc = 0;
   float x, y, z;
-  float prevZ=0;
   float zTot = 0;
   float counterZ;
   int count=0;
   counterZ = z;
 
-  while(enc < target) {
+  while(target < enc) {
     if(IMU.gyroscopeAvailable()) {
       if(count % 10 == 0) {
         IMU.readGyroscope(x, y, counterZ);
@@ -149,7 +147,52 @@ void backForCm(float cm, int pwm) {
  * @param pwm PWM value
  */
 void rotateForDegree(float degree, int pwm) {
+  if(pwm > 255) {
+    pwm = 255;
+  }
+  motorSetSpeedBoth(pwm);
 
+  float target = calculateGyro(degree);
+  float x, y, z;
+  float zTot = 0;
+
+  if(target < 0) {
+    while(zTot > target) {
+      if(IMU.gyroscopeAvailable()) {
+        IMU.readGyroscope(x, y, z);
+        zTot += (z-(gyroOffsetZ*0.7));
+      }
+      lcd1.clearDisplay();
+      lcd1.setCursor(1, 1);
+      lcd1.println(target);
+      lcd1.println(zTot);
+      lcd1.print(gyroOffsetZ);
+      lcd1.display();
+      motorRight();
+    }
+
+    motorStop();
+  }
+  else if(target > 0) {
+    while(zTot < target) {
+      if(IMU.gyroscopeAvailable()) {
+        IMU.readGyroscope(x, y, z);
+        zTot += (z-gyroOffsetZ);
+      }
+      lcd1.clearDisplay();
+      lcd1.setCursor(1, 1);
+      lcd1.println(target);
+      lcd1.println(zTot);
+      lcd1.print(gyroOffsetZ);
+      lcd1.display();
+      motorLeft();
+    }
+
+    motorStop();
+  }
+  else {
+    motorStop();
+  }
 }
 
 
@@ -186,9 +229,21 @@ void calibrateGyro(int n) {
 /**
  * @brief Calculate steps to make to travel cm @endif
  * 
+ * @param cm Centimeters to convert
  */
 int calculateStep(float cm) {
   return cm / (6.15*PI) * 12000 * 0.85;
+}
+
+
+/**
+ * @brief Calculate gyro to rotate degrees @endif
+ * 
+ * @param degree Degrees to rotate
+ * @return float value of gyro
+ */
+float calculateGyro(float degree) {
+  return -(degree * 7500 / 360);
 }
 
 

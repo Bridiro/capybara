@@ -23,6 +23,7 @@ void straightForCm(float cm, int pwm);
 void backForCm(float cm, int pwm);
 void rotateForDegree(float degree, int pwm);
 int calculateStep(float cm);
+float calculateGyro(float degree);
 void calibrateGyro(int n);
 void readEncoder();
 
