@@ -1,6 +1,6 @@
 #include "Motors.h"
 
-void motorInit() {
+void initMotor() {
   pinMode(INA1, OUTPUT);
   pinMode(INA2, OUTPUT);
   pinMode(PWMA, OUTPUT);
@@ -9,7 +9,7 @@ void motorInit() {
   pinMode(PWMB, OUTPUT);
 
   motorStop();
-  motorSetSpeedBoth(160);
+  motorSetSpeedBoth(170);
 }
 
 void motorSetSpeedA(uint8_t vel) {

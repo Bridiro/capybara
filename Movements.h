@@ -6,10 +6,17 @@
 #include <Adafruit_SSD1306.h>
 #include <Arduino_LSM9DS1.h>
 
+#include "Motors.h"
+
 #define ENCA 6
 #define ENCB 7
 
-static Adafruit_SSD1306 lcd1;
+#define WIDTH 128
+#define HEIGHT 64
+
+#define RESET -1
+
+static Adafruit_SSD1306 lcd(WIDTH, HEIGHT, &Wire, RESET);
 
 static int enc;
 
@@ -17,7 +24,8 @@ static float gyroOffsetX;
 static float gyroOffsetY;
 static float gyroOffsetZ;
 
-void initScreen(Adafruit_SSD1306 lcda);
+void initScreen();
+void initGyro();
 void initEncoder();
 void straightForCm(float cm, int pwm);
 void backForCm(float cm, int pwm);
@@ -26,5 +34,6 @@ int calculateStep(float cm);
 float calculateGyro(float degree);
 void calibrateGyro(int n);
 void readEncoder();
+void printlnScreen(char *s);
 
 #endif

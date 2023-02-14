@@ -1,25 +1,41 @@
 #include "Movements.h"
-#include "Motors.h"
 
 
 /**
- * @brief Init screen in Movements @endif
+ * @brief Init screen @endif
  * 
- * @param lcda Pointer to lcd object
  */
-void initScreen(Adafruit_SSD1306 lcda) {
-  lcd1 = lcda;
-  if(!lcd1.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+void initScreen() {
+  if(!lcd.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println("DISPLAY NON VA!");
     for(;;);
   }
-  lcd1.display();
-  lcd1.clearDisplay();
-  lcd1.display();
-  lcd1.setTextColor(WHITE);
-  lcd1.setTextSize(2);
+
+  lcd.display();
+  delay(200);
+  lcd.clearDisplay();
+  lcd.display();
+  lcd.setTextColor(WHITE);
+  lcd.setTextSize(1);
 }
 
+
+/**
+ * @brief Init IMU @endif
+ * 
+ */
+void initGyro() {
+  if(!IMU.begin()) {
+    Serial.println("IMU NON VA!");
+    for(;;);
+  }
+}
+
+
+/**
+ * @brief Init encoder pins and attach the interrupt @endif
+ * 
+ */
 void initEncoder() {
   pinMode(ENCA, INPUT);
   pinMode(ENCB, INPUT);
@@ -70,12 +86,12 @@ void straightForCm(float cm, int pwm) {
         motorSetSpeedBoth(pwm);
       }
     }
-    lcd1.clearDisplay();
-    lcd1.setCursor(1, 1);
-    lcd1.println(enc);
-    lcd1.println(target);
-    lcd1.print(zTot);
-    lcd1.display();
+    lcd.clearDisplay();
+    lcd.setCursor(1, 1);
+    lcd.println(enc);
+    lcd.println(target);
+    lcd.print(zTot);
+    lcd.display();
     motorStraight();
   }
 
@@ -126,12 +142,12 @@ void backForCm(float cm, int pwm) {
         motorSetSpeedBoth(pwm);
       }
     }
-    lcd1.clearDisplay();
-    lcd1.setCursor(1, 1);
-    lcd1.println(enc);
-    lcd1.println(target);
-    lcd1.print(zTot);
-    lcd1.display();
+    lcd.clearDisplay();
+    lcd.setCursor(1, 1);
+    lcd.println(enc);
+    lcd.println(target);
+    lcd.print(zTot);
+    lcd.display();
     motorBackward();
   }
 
@@ -162,12 +178,12 @@ void rotateForDegree(float degree, int pwm) {
         IMU.readGyroscope(x, y, z);
         zTot += (z-(gyroOffsetZ*0.7));
       }
-      lcd1.clearDisplay();
-      lcd1.setCursor(1, 1);
-      lcd1.println(target);
-      lcd1.println(zTot);
-      lcd1.print(gyroOffsetZ);
-      lcd1.display();
+      lcd.clearDisplay();
+      lcd.setCursor(1, 1);
+      lcd.println(target);
+      lcd.println(zTot);
+      lcd.print(gyroOffsetZ);
+      lcd.display();
       motorRight();
     }
 
@@ -179,12 +195,12 @@ void rotateForDegree(float degree, int pwm) {
         IMU.readGyroscope(x, y, z);
         zTot += (z-gyroOffsetZ);
       }
-      lcd1.clearDisplay();
-      lcd1.setCursor(1, 1);
-      lcd1.println(target);
-      lcd1.println(zTot);
-      lcd1.print(gyroOffsetZ);
-      lcd1.display();
+      lcd.clearDisplay();
+      lcd.setCursor(1, 1);
+      lcd.println(target);
+      lcd.println(zTot);
+      lcd.print(gyroOffsetZ);
+      lcd.display();
       motorLeft();
     }
 
@@ -259,4 +275,15 @@ void readEncoder() {
   else{
     enc += 1;
   }
+}
+
+
+/**
+ * @brief Print on lcd @endif
+ * 
+ * @param s char array to print
+ */
+void printlnScreen(char *s) {
+  lcd.println(s);
+  lcd.display();
 }

@@ -13,7 +13,7 @@
 #define MULTIPLIER_A 0.80
 #define MULTIPLIER_B 1
 
-void motorInit();
+void initMotor();
 
 void motorSetSpeedA(uint8_t vel);
 void motorSetSpeedB(uint8_t vel);
