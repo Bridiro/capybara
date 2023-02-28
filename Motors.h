@@ -10,8 +10,8 @@
 #define INB2 10
 #define PWMB 8
 
-#define MULTIPLIER_A 0.80
-#define MULTIPLIER_B 1
+#define MULTIPLIER_A 1
+#define MULTIPLIER_B 0.9
 
 void initMotor();
 

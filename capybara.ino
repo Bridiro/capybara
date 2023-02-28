@@ -45,23 +45,30 @@ void setup() {
   printlnScreen("COMPLETED!");
 
   delay(3000);
+
+  explore();
+
+  Serial.println("AIUTOOOOO");
+  printlnScreen("AIUTOOOOO");
 }
 
 void loop() {
-  straightForCm(30, 190);
+  /*
+  straightForCm(30, 170);
   delay(500);
-  rotateForDegree(90, 230);
+  rotateForDegree(90, 210);
   delay(500);
-  straightForCm(30, 190);
+  straightForCm(30, 170);
   delay(500);
-  rotateForDegree(90, 230);
+  rotateForDegree(90, 210);
   delay(500);
-  straightForCm(30, 190);
+  straightForCm(30, 170);
   delay(500);
-  rotateForDegree(90, 230);
+  rotateForDegree(90, 210);
   delay(500);
-  straightForCm(30, 190);
+  straightForCm(30, 170);
   delay(500);
-  rotateForDegree(90, 230);
+  rotateForDegree(450, 210);
   delay(5000);
+  */
 }

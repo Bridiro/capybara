@@ -35,5 +35,6 @@ float calculateGyro(float degree);
 void calibrateGyro(int n);
 void readEncoder();
 void printlnScreen(char *s);
+void clearScreen();
 
 #endif

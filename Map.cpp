@@ -289,7 +289,7 @@ void Map::back() {
  * if finded a '?', so a not visited cell, return the direction for it,
  * if there is not priority and no '?' near it calls MAP::pathTo() to find the target cell
  * 
- * @return 0 for right, 1 for straight, 2 for left, 3 for back
+ * @return 0 for right, 1 for straight, 2 for left, 3 for back, 4 for nothing
  */
 int8_t Map::suggestDirection() {
   int dir_scan = 0, directionP;

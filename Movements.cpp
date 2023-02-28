@@ -66,7 +66,7 @@ void straightForCm(float cm, int pwm) {
 
   while(enc < target) {
     if(IMU.gyroscopeAvailable()) {
-      if(count % 10 == 0) {
+      if(count % 5 == 0) {
         IMU.readGyroscope(x, y, counterZ);
       }
       count++;
@@ -172,7 +172,9 @@ void rotateForDegree(float degree, int pwm) {
   float x, y, z;
   float zTot = 0;
 
+  //destra
   if(target < 0) {
+    target *= 0.915;
     while(zTot > target) {
       if(IMU.gyroscopeAvailable()) {
         IMU.readGyroscope(x, y, z);
@@ -189,6 +191,7 @@ void rotateForDegree(float degree, int pwm) {
 
     motorStop();
   }
+  //sinistra
   else if(target > 0) {
     while(zTot < target) {
       if(IMU.gyroscopeAvailable()) {
@@ -259,7 +262,7 @@ int calculateStep(float cm) {
  * @return float value of gyro
  */
 float calculateGyro(float degree) {
-  return -(degree * 7500 / 360);
+  return -(degree * 7000 / 360);
 }
 
 
@@ -285,5 +288,15 @@ void readEncoder() {
  */
 void printlnScreen(char *s) {
   lcd.println(s);
+  lcd.display();
+}
+
+
+/**
+ * @brief Clear the lcd @endif
+ * 
+ */
+void clearScreen() {
+  lcd.clearDisplay();
   lcd.display();
 }
