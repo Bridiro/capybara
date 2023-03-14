@@ -11,6 +11,9 @@ static DFRobot_VL6180X VL6180X;
 
 void initTof();
 uint8_t readTof(uint8_t t);
-boolean* getMuri();
+bool frontWall();
+bool rightWall();
+bool leftWall();
+bool backWall();
 
 #endif

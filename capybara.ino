@@ -53,7 +53,6 @@ void setup() {
 }
 
 void loop() {
-  /*
   straightForCm(30, 170);
   delay(500);
   rotateForDegree(90, 210);
@@ -70,5 +69,4 @@ void loop() {
   delay(500);
   rotateForDegree(450, 210);
   delay(5000);
-  */
 }

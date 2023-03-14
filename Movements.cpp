@@ -293,6 +293,17 @@ void printlnScreen(char *s) {
 
 
 /**
+ * @brief Print on lcd @endif
+ * 
+ * @param n int to print
+ */
+void printlnScreen(int n) {
+  lcd.println(n);
+  lcd.display();
+}
+
+
+/**
  * @brief Clear the lcd @endif
  * 
  */

@@ -7,7 +7,7 @@
  */
 void initTof() {
   I2CMultiplexer.begin();
-  for(int i=0; i<8; i++) {
+  for(int i=0; i<6; i++) {          // 0 front      1 2 right      3 4 left     5 back
     I2CMultiplexer.selectPort(i);
     while(!(VL6180X.begin())){
       delay(500);
@@ -19,7 +19,7 @@ void initTof() {
 /**
  * @brief Read the selected tof value @endif
  * 
- * @param t From 0 to 7
+ * @param t From 0 to 5
  * @return uint8_t 
  */
 uint8_t readTof(uint8_t t) {
@@ -29,42 +29,66 @@ uint8_t readTof(uint8_t t) {
 
 
 /**
- * @brief Get the Muri object
+ * @brief True if front wall is present @endif
  * 
- * @return boolean[] Norh East South West
+ * @return true 
+ * @return false 
  */
-boolean* getMuri() {
-  boolean* muri;
-  for(int i=0; i<4; i++) {
-    *muri[i] = false;
+bool frontWall() {
+  uint8_t m = readTof(0);
+
+  if(m < 255) {
+    return true;
   }
-  I2CMultiplexer.selectPort(0);
-  uint8_t m = VL6180X.rangePollMeasurement();
-  I2CMultiplexer.selectPort(1);
-  uint8_t m2 = VL6180X.rangePollMeasurement();
-  if(m < 100 && m2 < 100) {
-    *muri[0] = true;
+  return false;
+}
+
+
+/**
+ * @brief True if right wall is present @endif
+ * 
+ * @return true 
+ * @return false 
+ */
+bool rightWall() {
+  uint8_t m = readTof(1);
+  uint8_t m2 = readTof(2);
+
+  if(m < 255 || m2 < 255) {
+    return true;
   }
-  I2CMultiplexer.selectPort(2);
-  m = VL6180X.rangePollMeasurement();
-  I2CMultiplexer.selectPort(3);
-  m2 = VL6180X.rangePollMeasurement();
-  if(m < 100 && m2 < 100) {
-    *muri[1] = true;
+  return false;
+}
+
+
+/**
+ * @brief True if left wall is present @endif
+ * 
+ * @return true 
+ * @return false 
+ */
+bool leftWall() {
+  uint8_t m = readTof(3);
+  uint8_t m2 = readTof(4);
+
+  if(m < 255 || m2 < 255) {
+    return true;
   }
-  I2CMultiplexer.selectPort(4);
-  m = VL6180X.rangePollMeasurement();
-  I2CMultiplexer.selectPort(5);
-  m2 = VL6180X.rangePollMeasurement();
-  if(m < 100 && m2 < 100) {
-    *muri[2] = true;
+  return false;
+}
+
+
+/**
+ * @brief True if back wall is present @endif
+ * 
+ * @return true 
+ * @return false 
+ */
+bool backWall() {
+  uint8_t m = readTof(5);
+
+  if(m < 255) {
+    return true;
   }
-  I2CMultiplexer.selectPort(6);
-  m = VL6180X.rangePollMeasurement();
-  I2CMultiplexer.selectPort(7);
-  m2 = VL6180X.rangePollMeasurement();
-  if(m < 100 && m2 < 100) {
-    *muri[3] = true;
-  }
-  return muri;
+  return false;
 }
