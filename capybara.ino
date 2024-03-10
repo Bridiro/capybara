@@ -8,7 +8,8 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
 
   Serial.println("Configurazione iniziata");
@@ -40,19 +41,17 @@ void setup() {
   Serial.println("Inizializzazione mappa");
   m.init();
   printlnScreen("MAP: DONE");
-  
+
   Serial.println("Setup completo!");
   printlnScreen("COMPLETED!");
 
   delay(3000);
 
   explore();
-
-  Serial.println("AIUTOOOOO");
-  printlnScreen("AIUTOOOOO");
 }
 
-void loop() {
+void loop()
+{
   straightForCm(30, 170);
   delay(500);
   rotateForDegree(90, 210);
@@ -67,6 +66,6 @@ void loop() {
   delay(500);
   straightForCm(30, 170);
   delay(500);
-  rotateForDegree(450, 210);
+  rotateForDegree(90, 210);
   delay(5000);
 }

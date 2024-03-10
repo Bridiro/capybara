@@ -35,9 +35,12 @@ uint8_t readTof(uint8_t t) {
  * @return false 
  */
 bool frontWall() {
-  uint8_t m = readTof(0);
+  I2CMultiplexer.selectPort(0);
+  uint8_t m = VL6180X.rangePollMeasurement();
+  Serial.print("Front wall: ");
+  Serial.println(m);
 
-  if(m < 255) {
+  if(m < 200) {
     return true;
   }
   return false;
@@ -51,10 +54,16 @@ bool frontWall() {
  * @return false 
  */
 bool rightWall() {
-  uint8_t m = readTof(1);
-  uint8_t m2 = readTof(2);
+  I2CMultiplexer.selectPort(1);
+  uint8_t m = VL6180X.rangePollMeasurement();
+  I2CMultiplexer.selectPort(2);
+  uint8_t m2 = VL6180X.rangePollMeasurement();
+  Serial.print("Right 1: ");
+  Serial.println(m);
+  Serial.print("Right 2: ");
+  Serial.println(m2);
 
-  if(m < 255 || m2 < 255) {
+  if(m < 210 && m2 < 210) {
     return true;
   }
   return false;
@@ -68,10 +77,16 @@ bool rightWall() {
  * @return false 
  */
 bool leftWall() {
-  uint8_t m = readTof(3);
-  uint8_t m2 = readTof(4);
+  I2CMultiplexer.selectPort(3);
+  uint8_t m = VL6180X.rangePollMeasurement();
+  I2CMultiplexer.selectPort(4);
+  uint8_t m2 = VL6180X.rangePollMeasurement();
+  Serial.print("Left 1: ");
+  Serial.println(m);
+  Serial.print("Left 2: ");
+  Serial.println(m2);
 
-  if(m < 255 || m2 < 255) {
+  if(m < 210 && m2 < 210) {
     return true;
   }
   return false;
@@ -85,9 +100,12 @@ bool leftWall() {
  * @return false 
  */
 bool backWall() {
-  uint8_t m = readTof(5);
+  I2CMultiplexer.selectPort(5);
+  uint8_t m = VL6180X.rangePollMeasurement();
+  Serial.print("Back wall: ");
+  Serial.println(m);
 
-  if(m < 255) {
+  if(m < 160) {
     return true;
   }
   return false;

@@ -3,15 +3,16 @@
 
 #include <Arduino.h>
 
-#define PWMA 13
-#define INA2 12
-#define INA1 11
-#define INB1 9
-#define INB2 10
-#define PWMB 8
+#define INA1 2
+#define INA2 3
+#define INB1 4
+#define INB2 5
 
 #define MULTIPLIER_A 1
-#define MULTIPLIER_B 0.9
+#define MULTIPLIER_B 1
+
+static uint8_t pwmA;
+static uint8_t pwmB;
 
 void initMotor();
 

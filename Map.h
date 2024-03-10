@@ -10,7 +10,7 @@ class Map {
     uint8_t dimCampo = 15;
     uint8_t visited[15][15];                               // Used for finding the prio path
     uint8_t posx, posy;                                    // Position of the robot in the map
-    boolean finished;                                      // Boolean variable to stop the robot when finished mapping
+    bool finished;                                      // bool variable to stop the robot when finished mapping
     int8_t dir;                                            // Direction of the robot in the map
     uint8_t checkX, checkY;                                // Position of the last chekpoint seen
 
@@ -18,7 +18,7 @@ class Map {
     void init();                                           // Initialize the map and the position
     void printMap();                                       // Print the map in the Serial
     void printVisited();                                   // Print the visited matrix in the Serial
-    void scanNeighbors(boolean north, boolean east, boolean south, boolean west);   // Modify the map when scanning the walls around the robot
+    void scanNeighbors(bool north, bool east, bool south, bool west);   // Modify the map when scanning the walls around the robot
     void turnRight();                                      // Modify dir variable to turn 90 degree right
     void turnLeft();                                       // Modify dir variable to turn 90 degree left
     void turn180();                                        // Modify dir variable to turn 180 degree
@@ -39,10 +39,10 @@ class Map {
 
                                 // Methods
     int8_t findNearPriority();                             // Search priority path around the robot
-    boolean pathTo(char dest);                             // To find the prio path via bfs
+    bool pathTo(char dest);                             // To find the prio path via bfs
     void initializeVisited();                              // Initialize the visited matrix to 0
-    boolean makeStep(char dest);                           // Step for searching with bfs
-    boolean checkIfFinded();                               // Check if dest has been reached
+    bool makeStep(char dest);                           // Step for searching with bfs
+    bool checkIfFinded();                               // Check if dest has been reached
     void getPrio(char dest);                               // Function to get the prio path from the visited matrix
 };
 

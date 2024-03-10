@@ -7,6 +7,7 @@
 #include <Arduino_LSM9DS1.h>
 
 #include "Motors.h"
+#include "Tof.h"
 
 #define ENCA 6
 #define ENCB 7
@@ -15,6 +16,9 @@
 #define HEIGHT 64
 
 #define RESET -1
+
+#define GYRO_MULTIPLIER_DX 1
+#define GYRO_MULTIPLIER_SX 1
 
 static Adafruit_SSD1306 lcd(WIDTH, HEIGHT, &Wire, RESET);
 
@@ -28,10 +32,8 @@ void initScreen();
 void initGyro();
 void initEncoder();
 void straightForCm(float cm, int pwm);
-void backForCm(float cm, int pwm);
 void rotateForDegree(float degree, int pwm);
 int calculateStep(float cm);
-float calculateGyro(float degree);
 void calibrateGyro(int n);
 void readEncoder();
 void printlnScreen(char *s);

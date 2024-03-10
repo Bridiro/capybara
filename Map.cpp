@@ -92,7 +92,7 @@ void Map::printVisited() {
  * @param south South wall
  * @param west West wall
  */
-void Map::scanNeighbors(boolean north, boolean east, boolean south, boolean west) {
+void Map::scanNeighbors(bool north, bool east, bool south, bool west) {
   if(campo[posx][posy]=='?') {
     campo[posx][posy]='e';
   }
@@ -293,7 +293,7 @@ void Map::back() {
  */
 int8_t Map::suggestDirection() {
   int dir_scan = 0, directionP;
-  boolean finded = false;
+  bool finded = false;
 
   if((campo[posx+1][posy]=='p') || (campo[posx][posy+1]=='p') || (campo[posx-1][posy]=='p') || (campo[posx][posy-1]=='p')) {
     finded=true;
@@ -467,7 +467,7 @@ int8_t Map::suggestDirection() {
 
   if(!finded) {
     Serial.println("Cerco ?");
-    boolean bFind = Map::pathTo('?');
+    bool bFind = Map::pathTo('?');
     if(!bFind) {
       Serial.println("Cerco S");
       bFind = Map::pathTo('s');
@@ -509,7 +509,7 @@ int8_t Map::suggestDirection() {
  */
 int8_t Map::findNearPriority() {
 
-  boolean finded=false;
+  bool finded=false;
   int dir_scan;
   
   if(campo[posx+1][posy]=='p' || campo[posx][posy+1]=='p' || campo[posx-1][posy]=='p' || campo[posx][posy-1]=='p') {
@@ -641,9 +641,9 @@ void Map::lackOfProgress() {
  * @param dest Character to search
  * @return True if finded, False if not
  */
-boolean Map::pathTo(char dest) {
+bool Map::pathTo(char dest) {
 
-  boolean step_made=true, nottrovato=true;
+  bool step_made=true, nottrovato=true;
 
   Map::initializeVisited();
 
@@ -703,9 +703,9 @@ void Map::initializeVisited() {
  * @param dest Character to search
  * @return True if step made, False if not
  */
-boolean Map::makeStep(char dest) {
+bool Map::makeStep(char dest) {
   
-  boolean step_made=false;
+  bool step_made=false;
 
   for(int i=0; i<dimCampo; i++) {
     for(int j=0; j<dimCampo; j++) {
@@ -760,7 +760,7 @@ boolean Map::makeStep(char dest) {
  * 
  * @return True if finded, False if not
  */
-boolean Map::checkIfFinded() {
+bool Map::checkIfFinded() {
   if(x[0]==-1 && y[0]==-1) {
     return true;
   }
