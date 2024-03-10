@@ -40,10 +40,7 @@ bool frontWall() {
   Serial.print("Front wall: ");
   Serial.println(m);
 
-  if(m < 200) {
-    return true;
-  }
-  return false;
+  return m < 200;
 }
 
 
@@ -63,10 +60,7 @@ bool rightWall() {
   Serial.print("Right 2: ");
   Serial.println(m2);
 
-  if(m < 210 && m2 < 210) {
-    return true;
-  }
-  return false;
+  return m < 210 && m2 < 210;
 }
 
 
@@ -86,10 +80,7 @@ bool leftWall() {
   Serial.print("Left 2: ");
   Serial.println(m2);
 
-  if(m < 210 && m2 < 210) {
-    return true;
-  }
-  return false;
+  return m < 210 && m2 < 210; 
 }
 
 
@@ -105,8 +96,5 @@ bool backWall() {
   Serial.print("Back wall: ");
   Serial.println(m);
 
-  if(m < 160) {
-    return true;
-  }
-  return false;
+  return m < 160;
 }
