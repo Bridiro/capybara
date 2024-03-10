@@ -1,5 +1,11 @@
 #include "Tof.h"
 
+#define FRONT_TOF_INDEX 0
+#define RIGHT_FRONT_TOF_INDEX 1
+#define RIGHT_BACK_TOF_INDEX 2
+#define LEFT_FRONT_TOF_INDEX 3
+#define LEFT_BACK_TOF_INDEX 4
+#define BACK_TOF_INDEX 5
 
 /**
  * @brief Init tofs @endif
@@ -35,7 +41,7 @@ uint8_t readTof(uint8_t t) {
  * @return false 
  */
 bool frontWall() {
-  I2CMultiplexer.selectPort(0);
+  I2CMultiplexer.selectPort(FRONT_TOF_INDEX);
   uint8_t m = VL6180X.rangePollMeasurement();
   Serial.print("Front wall: ");
   Serial.println(m);
@@ -51,9 +57,9 @@ bool frontWall() {
  * @return false 
  */
 bool rightWall() {
-  I2CMultiplexer.selectPort(1);
+  I2CMultiplexer.selectPort(RIGHT_FRONT_TOF_INDEX);
   uint8_t m = VL6180X.rangePollMeasurement();
-  I2CMultiplexer.selectPort(2);
+  I2CMultiplexer.selectPort(RIGHT_BACK_TOF_INDEX);
   uint8_t m2 = VL6180X.rangePollMeasurement();
   Serial.print("Right 1: ");
   Serial.println(m);
@@ -71,9 +77,9 @@ bool rightWall() {
  * @return false 
  */
 bool leftWall() {
-  I2CMultiplexer.selectPort(3);
+  I2CMultiplexer.selectPort(LEFT_FRONT_TOF_INDEX);
   uint8_t m = VL6180X.rangePollMeasurement();
-  I2CMultiplexer.selectPort(4);
+  I2CMultiplexer.selectPort(LEFT_BACK_TOF_INDEX);
   uint8_t m2 = VL6180X.rangePollMeasurement();
   Serial.print("Left 1: ");
   Serial.println(m);
@@ -91,7 +97,7 @@ bool leftWall() {
  * @return false 
  */
 bool backWall() {
-  I2CMultiplexer.selectPort(5);
+  I2CMultiplexer.selectPort(BACK_TOF_INDEX);
   uint8_t m = VL6180X.rangePollMeasurement();
   Serial.print("Back wall: ");
   Serial.println(m);
