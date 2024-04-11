@@ -37,6 +37,7 @@ int calculateStep(float cm);
 void calibrateGyro(int n);
 void readEncoder();
 void printlnScreen(char *s);
+void printlnScreen(const char *s);
 void printlnScreen(int n);
 void clearScreen();
 

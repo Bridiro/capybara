@@ -29,54 +29,54 @@ void motorSetSpeedBoth(uint8_t vel)
 
 void motorLeft()
 {
-  digitalWrite(INA1, LOW);
+  analogWrite(INA1, 0);
   analogWrite(INA2, pwmA);
 
   analogWrite(INB1, pwmB);
-  digitalWrite(INB2, LOW);
+  analogWrite(INB2, 0);
 }
 
 void motorRight()
 {
   analogWrite(INA1, pwmA);
-  digitalWrite(INA2, LOW);
+  analogWrite(INA2, 0);
 
-  digitalWrite(INB1, LOW);
+  analogWrite(INB1, 0);
   analogWrite(INB2, pwmB);
 }
 
 void motorBackward()
 {
-  digitalWrite(INA1, LOW);
+  analogWrite(INA1, 0);
   analogWrite(INA2, pwmA);
 
-  digitalWrite(INB1, LOW);
+  analogWrite(INB1, 0);
   analogWrite(INB2, pwmB);
 }
 
 void motorStraight()
 {
   analogWrite(INA1, pwmA);
-  digitalWrite(INA2, LOW);
+  analogWrite(INA2, 0);
 
   analogWrite(INB1, pwmB);
-  digitalWrite(INB2, LOW);
+  analogWrite(INB2, 0);
 }
 
 void motorStop()
 {
-  digitalWrite(INA1, LOW);
-  digitalWrite(INA2, LOW);
+  analogWrite(INA1, 0);
+  analogWrite(INA2, 0);
 
-  digitalWrite(INB1, LOW);
-  digitalWrite(INB2, LOW);
+  analogWrite(INB1, 0);
+  analogWrite(INB2, 0);
 }
 
 void motorBreak()
 {
-  digitalWrite(INA1, HIGH);
-  digitalWrite(INA2, HIGH);
+  analogWrite(INA1, 255);
+  analogWrite(INA2, 255);
 
-  digitalWrite(INB1, HIGH);
-  digitalWrite(INB2, HIGH);
+  analogWrite(INB1, 255);
+  analogWrite(INB2, 255);
 }

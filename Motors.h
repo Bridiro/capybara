@@ -5,8 +5,8 @@
 
 #define INA1 2
 #define INA2 3
-#define INB1 4
-#define INB2 5
+#define INB1 5
+#define INB2 4
 
 #define MULTIPLIER_A 1
 #define MULTIPLIER_B 1

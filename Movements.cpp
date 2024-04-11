@@ -57,7 +57,6 @@ void straightForCm(float cm, int pwm)
 {
     enc = 0;
     float x, y, z;
-    float zTot = 0;
     float counterZ;
     int count = 0;
     int target;
@@ -72,14 +71,7 @@ void straightForCm(float cm, int pwm)
     }
     motorSetSpeedBoth(pwm);
 
-    if (cm > 0)
-    {
-        target = calculateStep(cm);
-    }
-    else
-    {
-        target = calculateStep(-cm);
-    }
+    target = calculateStep(cm);
 
     while (cm > 0 ? enc < target : target < enc)
     {
@@ -92,13 +84,15 @@ void straightForCm(float cm, int pwm)
             IMU.readGyroscope(x, y, z);
             float gyroZ = z + gyroOffsetZ;
             angleZ += gyroZ * dt;
-            Serial.println(angleZ);
+            Serial.print(angleZ);
+            Serial.print("       ");
+            Serial.println(enc);
 
-            if (angleZ > 0)
+            if (angleZ < 0)
             {
                 motorSetSpeedA(pwm - angleZ * 2);
             }
-            else if (angleZ < 0)
+            else if (angleZ > 0)
             {
                 motorSetSpeedB(pwm - angleZ * 2);
             }
@@ -109,9 +103,12 @@ void straightForCm(float cm, int pwm)
         }
         lcd.clearDisplay();
         lcd.setCursor(1, 1);
+        lcd.print("Enc: ");
         lcd.println(enc);
+        lcd.print("T: ");
         lcd.println(target);
-        lcd.print(zTot);
+        lcd.print("Gyro: ");
+        lcd.println(angleZ);
         lcd.display();
         if (cm > 0)
         {
@@ -134,17 +131,17 @@ void straightForCm(float cm, int pwm)
  */
 void rotateForDegree(float degree, int pwm)
 {
+    float angleZ = 0;
+    float x, y, z;
+    int newT;
+    int oldT = millis();
+    degree *= -1;
+
     if (pwm > 255)
     {
         pwm = 255;
     }
     motorSetSpeedBoth(pwm);
-
-    float angleZ = 0;
-    float x, y, z;
-    int newT;
-    int oldT = millis();
-
     if (degree > 0)
     {
         motorRight();
@@ -154,7 +151,7 @@ void rotateForDegree(float degree, int pwm)
         motorLeft();
     }
 
-    while (degree > 0 ? angleZ * GYRO_MULTIPLIER_DX > -degree : angleZ * GYRO_MULTIPLIER_SX < -degree)
+    while (degree > 0 ? angleZ * GYRO_MULTIPLIER_DX < degree : angleZ * GYRO_MULTIPLIER_SX > degree)
     {
         if (IMU.gyroscopeAvailable())
         {
@@ -167,6 +164,14 @@ void rotateForDegree(float degree, int pwm)
             angleZ += gyroZ * dt;
             Serial.println(angleZ);
         }
+
+        lcd.clearDisplay();
+        lcd.setCursor(1, 1);
+        lcd.print("T: ");
+        lcd.println(degree);
+        lcd.print("Gyro: ");
+        lcd.println(angleZ);
+        lcd.display();
     }
 
     motorStop();
@@ -210,7 +215,7 @@ void calibrateGyro(int n)
  */
 int calculateStep(float cm)
 {
-    return cm / (6.15 * PI) * 12000 * 0.85;
+    return cm / (7.5 * PI) * 12000;
 }
 
 /**
@@ -236,6 +241,17 @@ void readEncoder()
  * @param s char array to print
  */
 void printlnScreen(char *s)
+{
+    lcd.println(s);
+    lcd.display();
+}
+
+/**
+ * @brief Print on lcd @endif
+ *
+ * @param s const char array to print
+ */
+void printlnScreen(const char *s)
 {
     lcd.println(s);
     lcd.display();
